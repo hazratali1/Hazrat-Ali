@@ -171,3 +171,23 @@ navLinks.forEach(link => {
   });
 });
 
+/* ===============================
+   MOBILE NAVBAR FIX
+================================ */
+
+const menuToggle = document.getElementById("menuToggle");
+const navMenu = document.querySelector(".navbar ul");
+const navLinks = document.querySelectorAll(".navbar ul li a");
+
+// open / close menu
+menuToggle.addEventListener("click", () => {
+  navMenu.classList.toggle("show");
+});
+
+// auto close after clicking link
+navLinks.forEach(link => {
+  link.addEventListener("click", () => {
+    navMenu.classList.remove("show");
+  });
+});
+
