@@ -151,3 +151,23 @@ menuToggle.addEventListener("click", () => {
   navMenu.classList.toggle("show");
 });
 
+/* ===============================
+   MOBILE NAVBAR AUTO CLOSE
+================================ */
+
+const menuToggle = document.getElementById("menuToggle");
+const navMenu = document.querySelector(".navbar ul");
+const navLinks = document.querySelectorAll(".navbar ul li a");
+
+// toggle menu open / close
+menuToggle.addEventListener("click", () => {
+  navMenu.classList.toggle("show");
+});
+
+// auto close menu after click
+navLinks.forEach(link => {
+  link.addEventListener("click", () => {
+    navMenu.classList.remove("show");
+  });
+});
+
