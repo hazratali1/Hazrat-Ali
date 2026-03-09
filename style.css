@@ -112,11 +112,17 @@ body{
   transform:translateY(40px);
   transition:.5s ease;
   padding-bottom:80px;
+  pointer-events:none;
+  z-index:0;
+  visibility:hidden;
 }
 
 .page.active{
   opacity:1;
   transform:translateY(0);
+  pointer-events:auto;
+  z-index:1;
+  visibility:visible;
 }
 
 .page-content{
@@ -157,6 +163,7 @@ body{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:28px;
+  align-items:start;
 }
 
 /* =========================
@@ -512,4 +519,3 @@ body{
     display:flex;
   }
 }
-
