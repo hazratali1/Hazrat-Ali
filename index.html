@@ -3,24 +3,403 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<meta name="google-site-verification"
-      content="3YmVURa_s5VgKlAN8KcBmqGrfTod0z1zZ8ut8etebuw" />
-
-
+<meta name="google-site-verification" content="3YmVURa_s5VgKlAN8KcBmqGrfTod0z1zZ8ut8etebuw" />
 <title>Hazrat Ali | Portfolio</title>
-
 <link rel="icon" href="assets/favicon.png">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-
-<link rel="stylesheet"
- href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <link rel="stylesheet" href="style.css">
+<style>
+
+/* =============================================
+   TOGGLE / ACCORDION SYSTEM
+============================================= */
+
+/* --- Experience Toggle --- */
+.exp-box {
+  cursor: pointer;
+  user-select: none;
+}
+
+.exp-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.exp-header h3 {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.4;
+}
+
+.exp-meta {
+  font-size: 13px;
+  color: #14e0ff;
+  margin-top: 6px;
+  opacity: 0.85;
+}
+
+.toggle-icon {
+  font-size: 18px;
+  color: #14e0ff;
+  transition: transform 0.35s ease;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.exp-box.open .toggle-icon {
+  transform: rotate(180deg);
+}
+
+.exp-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.45s ease, opacity 0.35s ease, padding 0.35s ease;
+  opacity: 0;
+}
+
+.exp-box.open .exp-body {
+  max-height: 600px;
+  opacity: 1;
+  padding-top: 16px;
+}
+
+.exp-body ul {
+  padding-left: 18px;
+  font-size: 14px;
+  line-height: 1.85;
+  opacity: 0.92;
+}
+
+.exp-body .exp-desc {
+  font-size: 14px;
+  line-height: 1.75;
+  opacity: 0.88;
+  margin-bottom: 12px;
+  color: #cce8f0;
+}
+
+/* --- Project Toggle --- */
+.project-box {
+  cursor: pointer;
+  user-select: none;
+}
+
+.project-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.project-header h3 {
+  margin: 0 0 8px 0;
+  font-size: 17px;
+  line-height: 1.4;
+}
+
+.project-box .toggle-icon {
+  margin-top: 3px;
+}
+
+.project-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.45s ease, opacity 0.35s ease, padding 0.35s ease;
+  opacity: 0;
+}
+
+.project-box.open .toggle-icon {
+  transform: rotate(180deg);
+}
+
+.project-box.open .project-body {
+  max-height: 400px;
+  opacity: 1;
+  padding-top: 12px;
+}
+
+.project-detail-text {
+  font-size: 13.5px;
+  line-height: 1.75;
+  color: #c8dce6;
+  margin-bottom: 12px;
+  border-top: 1px solid rgba(20,224,255,0.12);
+  padding-top: 12px;
+}
+
+.project-github {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  color: #14e0ff;
+  text-decoration: none;
+  margin-top: 4px;
+  transition: opacity 0.2s;
+}
+
+.project-github:hover { opacity: 0.75; }
+
+/* --- Publication Toggle --- */
+.pub-item {
+  cursor: pointer;
+  user-select: none;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  transition: background 0.2s;
+}
+
+.pub-item:last-child { border-bottom: none; }
+
+.pub-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.pub-title {
+  font-size: 15px;
+  line-height: 1.6;
+  font-weight: 500;
+}
+
+.pub-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, opacity 0.35s ease;
+  opacity: 0;
+}
+
+.pub-item.open .toggle-icon {
+  transform: rotate(180deg);
+}
+
+.pub-item.open .pub-body {
+  max-height: 300px;
+  opacity: 1;
+  padding-top: 10px;
+}
+
+.pub-body-inner {
+  font-size: 13.5px;
+  line-height: 1.75;
+  color: #b8d4e0;
+  padding: 8px 0 4px 0;
+}
+
+.pub-tag {
+  display: inline-block;
+  font-size: 12px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  margin-top: 8px;
+  font-weight: 600;
+}
+
+.pub-tag.accepted { background: rgba(20,224,100,0.18); color: #14e064; }
+.pub-tag.review   { background: rgba(255,200,20,0.15);  color: #ffc814; }
+
+/* --- Certificate Toggle --- */
+.cert-box {
+  cursor: pointer;
+  user-select: none;
+  width: 100%;
+  margin: 0;
+  padding: 26px 30px;
+  border-radius: 20px;
+  background: linear-gradient(145deg,#0b2742,#061a30);
+  transition: .35s ease;
+  text-align: left;
+}
+
+.cert-box:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 28px rgba(20,224,255,.15);
+}
+
+.cert-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.cert-header strong {
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+.cert-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, opacity 0.35s ease;
+  opacity: 0;
+}
+
+.cert-box.open .toggle-icon {
+  transform: rotate(180deg);
+}
+
+.cert-box.open .cert-body {
+  max-height: 200px;
+  opacity: 1;
+  padding-top: 12px;
+}
+
+.cert-body p {
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: #b8d4e0;
+  border-top: 1px solid rgba(20,224,255,0.1);
+  padding-top: 10px;
+  margin: 0;
+}
+
+.cert-issuer {
+  font-size: 12.5px;
+  color: #14e0ff;
+  margin-top: 6px;
+  display: block;
+}
+
+/* --- Category tabs for projects --- */
+.project-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin: 0 auto 30px auto;
+  width: 90%;
+}
+
+.tab-btn {
+  padding: 8px 18px;
+  border-radius: 25px;
+  border: 1.5px solid rgba(20,224,255,0.35);
+  background: transparent;
+  color: #cfdbe6;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  font-family: Inter, sans-serif;
+}
+
+.tab-btn:hover,
+.tab-btn.active {
+  background: rgba(20,224,255,0.15);
+  border-color: #14e0ff;
+  color: #14e0ff;
+}
+
+.project-category {
+  display: none;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.project-category.active {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 26px;
+  align-items: start;
+}
+
+/* =============================================
+   CV DOWNLOAD BUTTON
+============================================= */
+.cv-download-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 28px;
+  padding: 14px 34px;
+  border-radius: 50px;
+  background: linear-gradient(135deg, #14e0ff22, #0b3a55);
+  border: 1.5px solid #14e0ff;
+  color: #14e0ff;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.cv-download-btn:hover {
+  background: rgba(20,224,255,0.2);
+  box-shadow: 0 0 25px rgba(20,224,255,0.35);
+  transform: translateY(-2px);
+}
+
+/* Achievements grid override */
+#achievement .cert-grid {
+  width: 85%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  align-items: start;
+}
+
+@media(max-width:900px){
+  #achievement .cert-grid {
+    grid-template-columns: 1fr;
+    width: 92%;
+  }
+  .project-tabs { width: 94%; }
+  .project-category.active { width: 94%; }
+}
+
+/* Cursor pointer on all interactive items */
+.exp-box, .project-box, .pub-item, .cert-box,
+.skills-grid div, .tab-btn, .nav a, .navbar a,
+.main-footer a, .cv-download-btn {
+  cursor: pointer;
+}
+
+/* =============================================
+   HIDE NON-OPEN SIBLINGS (no blank space)
+============================================= */
+
+/* Experience: collapse body, keep header */
+.grid.has-open .exp-box:not(.open) .exp-body {
+  max-height: 0 !important;
+  opacity: 0 !important;
+  padding: 0 !important;
+  overflow: hidden;
+}
+
+/* Project: collapse body, keep header */
+.project-category.has-open .project-box:not(.open) .project-body {
+  max-height: 0 !important;
+  opacity: 0 !important;
+  padding: 0 !important;
+  overflow: hidden;
+}
+
+/* Publication: collapse body, keep header */
+.publication-box.has-open .pub-item:not(.open) .pub-body {
+  max-height: 0 !important;
+  opacity: 0 !important;
+  padding: 0 !important;
+  overflow: hidden;
+}
+
+/* Certificate: collapse body, keep header */
+.cert-grid.has-open .cert-box:not(.open) .cert-body {
+  max-height: 0 !important;
+  opacity: 0 !important;
+  padding: 0 !important;
+  overflow: hidden;
+}
+
+</style>
 </head>
 
 <body>
-
 <div class="wave-bg"></div>
 
 <!-- ================= NAVBAR ================= -->
@@ -29,10 +408,9 @@
     <img src="assets/profile.png" class="dp">
     <span>Hazrat Ali</span>
   </div>
-<div class="menu-toggle" id="menuToggle">
-  <i class="fa-solid fa-bars"></i>
-</div>
-
+  <div class="menu-toggle" id="menuToggle">
+    <i class="fa-solid fa-bars"></i>
+  </div>
   <ul id="navMenu">
     <li><a href="#home">Home</a></li>
     <li><a href="#about">About</a></li>
@@ -64,14 +442,20 @@
   <div class="page-content">
     <h2>About Me</h2>
     <div class="box">
-      Applied AI and Machine Learning Engineer with hands-on experience in traditional machine
-      learning, deep learning, and Large Language Model (LLM)-based systems. Experienced in
-      designing end-to-end ML and AI pipelines, including data preprocessing, feature engineer
-      ing, model training, evaluation, inference, deployment, and workflow automation. Skilled in
-      building production-ready solutions such as Retrieval-Augmented Generation (RAG) systems,
-      autonomous AI agents, customer support automation, and decision-support platforms using
-      transformer-based architectures. Strong foundation in applied machine learning research with
-      real-world business implementation.
+      <strong>Applied AI and Machine Learning Engineer</strong> with hands-on experience in
+      Machine Learning, Deep Learning, and Large Language Model (LLM)-based systems. Designing
+      end-to-end ML and AI pipelines including data preprocessing, feature engineering, model
+      training, evaluation, inference, deployment, and MLOps-driven workflow automation.
+      <br><br>
+      Experienced in building production-ready solutions such as
+      <span style="color:#14e0ff;">Retrieval-Augmented Generation (RAG)</span> systems,
+      <span style="color:#14e0ff;">LLM-powered customer support automation</span>,
+      <span style="color:#14e0ff;">AI-driven document question answering</span>,
+      <span style="color:#14e0ff;">vector database–backed semantic search</span>, and
+      <span style="color:#14e0ff;">AI workflow automation using n8n</span> for decision-support
+      platforms based on transformer architectures.
+      <br><br>
+      Strong foundation in <em>applied machine learning research</em> with real-world business implementation.
     </div>
   </div>
 </section>
@@ -81,24 +465,21 @@
 <section class="page" id="education">
   <div class="page-content">
     <h2>Education</h2>
-
     <div class="grid">
       <div class="box">
         <b>B.Sc. in Computer Science & Engineering</b><br>
         Green University of Bangladesh<br>
-        CGPA: 3.40 / 4.00
+        <span style="color:#14e0ff;">CGPA: 3.40 / 4.00 &nbsp;|&nbsp; 2021 – 2025</span>
       </div>
-
       <div class="box">
         <b>Higher Secondary Certificate (HSC)</b><br>
         Hajigonj Model Government College<br>
-        Chandpur, Bangladesh
+        <span style="color:#14e0ff;">Chandpur, Bangladesh</span>
       </div>
-
       <div class="box">
         <b>Secondary School Certificate (SSC)</b><br>
         Payali K B M High School<br>
-        Chandpur, Bangladesh
+        <span style="color:#14e0ff;">Chandpur, Bangladesh</span>
       </div>
     </div>
   </div>
@@ -109,36 +490,81 @@
 <section class="page" id="experience">
   <div class="page-content">
     <h2>Experience</h2>
+    <p style="font-size:13.5px;opacity:0.6;margin-bottom:28px;">Click any card to expand details</p>
 
     <div class="grid">
 
-      <div class="exp-box">
-        <h3>AI / ML Engineer — 9AM Solutions</h3>
-        <ul>
-          <li>LLM-based AI agents</li>
-          <li>RAG pipelines</li>
-          <li>Automation workflows</li>
-          <li>FastAPI backend services</li>
-        </ul>
+      <!-- 9AM Solutions -->
+      <div class="exp-box" onclick="toggleAccordion(this)">
+        <div class="exp-header">
+          <div>
+            <h3>AI / ML Engineer</h3>
+            <div class="exp-meta">9AM Solutions &nbsp;•&nbsp; 2025 – 2026 &nbsp;•&nbsp; On-site</div>
+          </div>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="exp-body">
+          <p class="exp-desc">
+            Worked on building production-grade AI systems including LLM-powered agents, RAG pipelines, and intelligent automation workflows that reduced manual workload for business clients.
+          </p>
+          <ul>
+            <li>Built LLM-powered AI agents for customer support and order processing using RAG and prompt engineering</li>
+            <li>Developed and deployed predictive ML models for business forecasting and decision support</li>
+            <li>Designed end-to-end automation pipelines integrating ML models, LLM agents, and business logic</li>
+            <li>Built scalable FastAPI backend services for model inference and workflow orchestration</li>
+            <li>Reduced customer service workload by ~60% through intelligent automation</li>
+            <li>Built AI automation workflows using n8n, Zapier, and Make for end-to-end business process automation</li>
+            <li>Integrated automation tools including GoHighLevel, Crisp, Slack, and Airtable into client workflows</li>
+          </ul>
+        </div>
       </div>
 
-      <div class="exp-box">
-        <h3>Research Assistant — CRITS, GUB</h3>
-        <ul>
-          <li>AI research experiments</li>
-          <li>Dataset preparation</li>
-          <li>Model benchmarking</li>
-        </ul>
+      <!-- CRITS -->
+      <div class="exp-box" onclick="toggleAccordion(this)">
+        <div class="exp-header">
+          <div>
+            <h3>Research Assistant — ML & NLP</h3>
+            <div class="exp-meta">CRITS, Green University of Bangladesh &nbsp;•&nbsp; 2024 – Present</div>
+          </div>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="exp-body">
+          <p class="exp-desc">
+            Contributed to cutting-edge AI research on mental health detection, LLM-based systems, and NLP applications for low-resource languages including Bangla.
+          </p>
+          <ul>
+            <li>Conducted exploratory data analysis and preprocessing on large-scale social media datasets</li>
+            <li>Designed and implemented end-to-end deep learning and transformer-based experimental pipelines</li>
+            <li>Evaluated models using accuracy, precision, recall, and F1-score benchmarks</li>
+            <li>Co-authored multiple peer-reviewed journal and IEEE conference research papers</li>
+            <li>Worked on depression detection, suicide risk prediction, and RAG-based research generation systems</li>
+          </ul>
+        </div>
       </div>
 
-      <div class="exp-box">
-        <h3>AI Developer — Softvence Agency (Present)</h3>
-        <ul>
-          <li>AI-powered web platforms</li>
-          <li>LLM integration</li>
-          <li>Prompt engineering</li>
-          <li>Automation & deployment</li>
-        </ul>
+      <!-- Softvence -->
+      <div class="exp-box" onclick="toggleAccordion(this)">
+        <div class="exp-header">
+          <div>
+            <h3>AI Developer</h3>
+            <div class="exp-meta">Softvence Agency &nbsp;•&nbsp; 2026 – Present &nbsp;•&nbsp; On-site</div>
+          </div>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="exp-body">
+          <p class="exp-desc">
+            Building AI-powered web platforms and intelligent automation solutions for business clients, integrating LLMs into real-world production environments.
+          </p>
+          <ul>
+            <li>Integrated LLMs into client-facing web platforms for smart interaction and content generation</li>
+            <li>Developed prompt engineering strategies for domain-specific AI behavior tuning</li>
+            <li>Built and deployed automated AI workflows for business process automation</li>
+            <li>Implemented RAG-based chatbots and customer support systems on production infrastructure</li>
+            <li>Managed deployment pipelines using Vercel, HuggingFace Spaces, and FastAPI</li>
+            <li>Designed AI automation solutions using n8n, Zapier, and Make for scalable business workflows</li>
+            <li>Integrated GoHighLevel, Crisp, Slack, and Airtable into automated AI-driven client systems</li>
+          </ul>
+        </div>
       </div>
 
     </div>
@@ -149,10 +575,8 @@
 <!-- ================= SKILLS ================= -->
 <section class="page" id="skills">
   <div class="page-content">
-
     <h2>Skills</h2>
 
-    <!-- Programming -->
     <div class="skill-group">
       <h3>Programming</h3>
       <div class="skills-grid">
@@ -163,7 +587,6 @@
       </div>
     </div>
 
-    <!-- Machine Learning -->
     <div class="skill-group">
       <h3>Machine Learning</h3>
       <div class="skills-grid">
@@ -183,7 +606,6 @@
       </div>
     </div>
 
-    <!-- Deep Learning -->
     <div class="skill-group">
       <h3>Deep Learning</h3>
       <div class="skills-grid">
@@ -199,7 +621,6 @@
       </div>
     </div>
 
-    <!-- AI Agents & Automation -->
     <div class="skill-group">
       <h3>AI Agents & Automation</h3>
       <div class="skills-grid">
@@ -213,10 +634,14 @@
         <div class="skill-box">Order Processing Automation</div>
         <div class="skill-box">n8n</div>
         <div class="skill-box">Make AI</div>
+        <div class="skill-box">Zapier</div>
+        <div class="skill-box">Crisp</div>
+        <div class="skill-box">GoHighLevel</div>
+        <div class="skill-box">Slack</div>
+        <div class="skill-box">Airtable</div>
       </div>
     </div>
 
-    <!-- GenAI & NLP -->
     <div class="skill-group">
       <h3>Generative AI & NLP</h3>
       <div class="skills-grid">
@@ -239,7 +664,6 @@
       </div>
     </div>
 
-    <!-- Deployment -->
     <div class="skill-group">
       <h3>Deployment & MLOps</h3>
       <div class="skills-grid">
@@ -254,7 +678,6 @@
       </div>
     </div>
 
-    <!-- Data & Tools -->
     <div class="skill-group">
       <h3>Data & Tools</h3>
       <div class="skills-grid">
@@ -275,59 +698,821 @@
 </section>
 
 
-
-<!-- ================= PROJECTS ================= -->
+<!-- ================= PROJECTS & PUBLICATIONS ================= -->
 <section class="page" id="projects">
   <div class="page-content">
 
     <h2>Projects</h2>
+    <p style="font-size:13.5px;opacity:0.6;margin-bottom:20px;">Click any project to expand details</p>
 
-    <div class="project-grid">
-
-      <div class="project-box"><h3>MediMate — AI Healthcare Assistant</h3><p>Medical diagnosis assistant</p><span>LLM • NLP • FastAPI</span></div>
-      <div class="project-box"><h3>Micro Tutor — AI Learning Assistant</h3><p>Multilingual tutoring system</p><span>LLM • VLM</span></div>
-      <div class="project-box"><h3>Bondhu — Mental Health AI</h3><p>Emotion-aware assistant</p><span>NLP • Transformers</span></div>
-      <div class="project-box"><h3>Fake News Detection</h3><p>Misinformation classification</p><span>BERT • NLP</span></div>
-      <div class="project-box"><h3>Crop Disease Detection</h3><p>Agriculture vision AI</p><span>CNN • TensorFlow</span></div>
-      <div class="project-box"><h3>Blood Donation System</h3><p>NLP-based donor search</p><span>NLP • Web</span></div>
-      <div class="project-box"><h3>University Management System</h3><p>Complete academic platform</p><span>Web • Database</span></div>
-      <div class="project-box"><h3>AI Customer Support Automation</h3><p>Private RAG automation</p><span>LLM • RAG</span></div>
-      <div class="project-box"><h3>Medical Privacy RAG</h3><p>Secure healthcare assistant</p><span>RAG • Vector DB</span></div>
-      <div class="project-box"><h3>Order Tracking Automation</h3><p>Automated business workflow</p><span>AI • Automation</span></div>
-      <div class="project-box"><h3>Depression Detection System</h3><p>Mental health prediction</p><span>DL • NLP</span></div>
-      <div class="project-box"><h3>Suicide Risk Prediction</h3><p>Early risk identification</p><span>Transformer</span></div>
-      <div class="project-box"><h3>Object Detection System</h3><p>Image & video detection</p><span>YOLO • CNN</span></div>
-      <div class="project-box"><h3>E-Commerce Inventory Management Automation</h3><p>Automated inventory, stock updates and order tracking workflow</p><span>n8n • Automation • API</span></div>
-      <div class="project-box"><h3>Website Customer Support Chatbot</h3><p>Automated customer chatbot for website queries and support</p><span>n8n • Chatbot • Automation</span></div>
-      <div class="project-box"><h3>Customer Support About Company Policy</h3><p>Automated customer mail for company policy and support</p><span>n8n • Email • Automation</span></div>
+    <!-- Category Tabs -->
+    <div class="project-tabs">
+      <button class="tab-btn active" onclick="switchTab(this,'cat-llm')">LLM / RAG / GenAI</button>
+      <button class="tab-btn" onclick="switchTab(this,'cat-automation')">Automation</button>
+      <button class="tab-btn" onclick="switchTab(this,'cat-ml')">ML / NLP</button>
+      <button class="tab-btn" onclick="switchTab(this,'cat-dl')">Deep Learning / CV</button>
+      <button class="tab-btn" onclick="switchTab(this,'cat-web')">Web Systems</button>
     </div>
 
-   <div class="publication-box">
-  <h2>Publications</h2>
-  <ul>
-    <li>
-      Deep Learning-Based Early Prediction of Depression & Suicidal Risk in Bangla Social Media Posts — IEEE STI 2025
-    </li>
+    <!-- LLM / RAG / GenAI -->
+    <div class="project-category active" id="cat-llm">
 
-    <li>
-      Retrieval-Grounded and Novelty-Aware Framework for Research Idea Generation with Large Language Models — Journal
+      <div class="project-box" onclick="toggleAccordion(this)">
+        <div class="project-header">
+          <div>
+            <h3>MediMate — AI Healthcare Assistant</h3>
+            <p>Integrates symptom analysis, medical image understanding and LLM-powered conversation to provide early healthcare guidance.</p>
+            <span>ML • NLP • Computer Vision • LLM • FastAPI</span>
+          </div>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="project-body">
+          <div class="project-detail-text">
+            MediMate addresses the challenge of accessible preliminary healthcare by combining three AI systems — a machine learning symptom checker, a CNN-based medical image analyser, and an LLM conversational assistant. Users get contextual, reasoned health guidance through a single interface. Deployed with FastAPI and Vercel for scalable real-time inference.
+          </div>
+          <a class="project-github" href="https://github.com/hazratali1" target="_blank">
+            <i class="fa-brands fa-github"></i> View on GitHub
+          </a>
+        </div>
+      </div>
 
-    </li>
+      <div class="project-box" onclick="toggleAccordion(this)">
+        <div class="project-header">
+          <div>
+            <h3>Micro Tutor — AI Learning Assistant</h3>
+            <p>Multilingual AI tutor supporting Bangla and English learners with adaptive, step-by-step explanations.</p>
+            <span>LLM • VLM • NLP • Python</span>
+          </div>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="project-body">
+          <div class="project-detail-text">
+            Micro Tutor solves the problem of quality education access for Bangla-speaking students. It uses vision-language models to understand handwritten or image-based problems and generates adaptive explanations via LLMs. Students receive personalised, curriculum-aligned guidance in their native language.
+          </div>
+          <a class="project-github" href="https://github.com/hazratali1" target="_blank">
+            <i class="fa-brands fa-github"></i> View on GitHub
+          </a>
+        </div>
+      </div>
 
-    <li>
-      Transformer-Based Hybrid Framework for Early Detection of Depression and Suicidal Risk — Journal 
-    </li>
+      <div class="project-box" onclick="toggleAccordion(this)">
+        <div class="project-header">
+          <div>
+            <h3>Bondhu — Mental Health Support AI</h3>
+            <p>Emotion-aware conversational assistant providing bilingual mental health support using transformer-based NLP.</p>
+            <span>Transformers • NLP • LLM • FastAPI</span>
+          </div>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="project-body">
+          <div class="project-detail-text">
+            Bondhu (meaning "friend" in Bangla) is built to bridge the mental health support gap in Bangladesh. The system detects user emotions in real time using transformer-based classification and generates empathetic, contextually appropriate responses. It supports both Bangla and English, making it accessible to a wider population.
+          </div>
+          <a class="project-github" href="https://github.com/hazratali1" target="_blank">
+            <i class="fa-brands fa-github"></i> View on GitHub
+          </a>
+        </div>
+      </div>
 
-    <li>
-       Leveraging Large Language Model–Driven Healthcare Decision Support Systems for Clinical Assistance 
-    </li>
+      <div class="project-box" onclick="toggleAccordion(this)">
+        <div class="project-header">
+          <div>
+            <h3>Medical Privacy RAG System</h3>
+            <p>Privacy-preserving RAG chatbot that answers medical queries using only private, verified documents — zero data leakage.</p>
+            <span>LLM • RAG • Vector DB • LangChain</span>
+          </div>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="project-body">
+          <div class="project-detail-text">
+            Built for healthcare organisations where patient data privacy is critical. The system grounds all LLM responses exclusively in ingested private medical documents using a vector database retrieval layer, ensuring the model never fabricates clinical information. Prevents hallucination and protects sensitive healthcare data.
+          </div>
+          <a class="project-github" href="https://github.com/hazratali1" target="_blank">
+            <i class="fa-brands fa-github"></i> View on GitHub
+          </a>
+        </div>
+      </div>
 
-    <li>
-      Privacy-Preserving Retrieval-Augmented Generation Framework for Medical Data Security 
-    </li>
-  </ul>
-</div>
+      <div class="project-box" onclick="toggleAccordion(this)">
+        <div class="project-header">
+          <div>
+            <h3>AI Customer Support Automation</h3>
+            <p>End-to-end LLM pipeline that automates intent detection, knowledge retrieval, order handling and response generation.</p>
+            <span>LLM • RAG • LangChain • n8n • Automation</span>
+          </div>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="project-body">
+          <div class="project-detail-text">
+            Designed for businesses with high customer query volumes. The pipeline automatically classifies intent, retrieves relevant knowledge via RAG, handles order lookups via API integration, and generates accurate replies — reducing human support workload by approximately 60% in production deployment.
+          </div>
+          <a class="project-github" href="https://github.com/hazratali1/AI-Agent-And-Automation" target="_blank">
+            <i class="fa-brands fa-github"></i> View on GitHub
+          </a>
+        </div>
+      </div>
 
+      <div class="project-box" onclick="toggleAccordion(this)">
+        <div class="project-header">
+          <div>
+            <h3>RAG Knowledge System — n8n Pipeline</h3>
+            <p>Document-based AI knowledge system using PDF uploads, vector embeddings and Pinecone for intelligent retrieval.</p>
+            <span>RAG • Google Gemini • Pinecone • n8n</span>
+          </div>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="project-body">
+          <div class="project-detail-text">
+            Users upload PDFs through a form. The system splits documents into smaller chunks, creates embeddings using Google Gemini, and stores them in Pinecone vector database. AI retrieves relevant document sections to answer questions accurately based on the uploaded knowledge base.
+          </div>
+          <a class="project-github" href="https://github.com/hazratali1" target="_blank">
+            <i class="fa-brands fa-github"></i> View on GitHub
+          </a>
+        </div>
+      </div>
+
+      <div class="project-box" onclick="toggleAccordion(this)">
+        <div class="project-header">
+          <div>
+            <h3>LLM-Powered Customer Support Agent</h3>
+            <p>Knowledge-base AI assistant using RAG, PDF embeddings and Pinecone vector search for intelligent customer support.</p>
+            <span>LLM • RAG • Google Gemini • Pinecone</span>
+          </div>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="project-body">
+          <div class="project-detail-text">
+            Users upload PDF documents through a form trigger. The documents are loaded and split into smaller text chunks, converted into vector embeddings using Google Gemini, and stored in Pinecone vector database. AI later searches this knowledge base to answer customer questions accurately.
+          </div>
+          <a class="project-github" href="https://github.com/hazratali1" target="_blank">
+            <i class="fa-brands fa-github"></i> View on GitHub
+          </a>
+        </div>
+      </div>
+
+      <div class="project-box" onclick="toggleAccordion(this)">
+        <div class="project-header">
+          <div>
+            <h3>GenAI Content Approval Pipeline</h3>
+            <p>AI-driven multi-platform content generation and approval system for LinkedIn, Instagram, Facebook, X, TikTok and YouTube.</p>
+            <span>LLM • AI Agent • Content Generation • n8n</span>
+          </div>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="project-body">
+          <div class="project-detail-text">
+            Collects a topic and requirements from a form, pulls related news from RSS feeds and Google News, scrapes articles and extracts key information. Uses an AI agent to score article relevance and generates platform-specific posts for LinkedIn, Instagram, Facebook, X, TikTok, and YouTube Shorts.
+          </div>
+          <a class="project-github" href="https://github.com/hazratali1" target="_blank">
+            <i class="fa-brands fa-github"></i> View on GitHub
+          </a>
+        </div>
+      </div>
+
+      <div class="project-box" onclick="toggleAccordion(this)">
+        <div class="project-header">
+          <div>
+            <h3>AI-Powered Facebook Messenger Bot</h3>
+            <p>LLM-based automated response system for Facebook page messaging using webhooks and AI agents.</p>
+            <span>LLM • AI Agent • Facebook API • Webhook</span>
+          </div>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="project-body">
+          <div class="project-detail-text">
+            Uses a Webhook to receive events from Facebook Messenger, validates the request using hub.mode and verify_token, and extracts the user's message text from the incoming payload. Sends the message to an LLM-powered AI agent to generate an automated reply, enabling 24/7 customer engagement.
+          </div>
+          <a class="project-github" href="https://github.com/hazratali1" target="_blank">
+            <i class="fa-brands fa-github"></i> View on GitHub
+          </a>
+        </div>
+      </div>
+
+      <div class="project-box" onclick="toggleAccordion(this)">
+        <div class="project-header">
+          <div>
+            <h3>Multilingual AI Restaurant Agent</h3>
+            <p>LLM-powered restaurant assistant handling food orders and table bookings with automatic language detection.</p>
+            <span>LLM • AI Agent • NLP • Telegram</span>
+          </div>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="project-body">
+          <div class="project-detail-text">
+            Triggered when a customer sends a chat message. The LLM detects the user's language and responds accordingly, handling food orders or table bookings. Collects user details (name, phone, items, time) and sends the confirmed order details to the restaurant owner via Telegram.
+          </div>
+          <a class="project-github" href="https://github.com/hazratali1" target="_blank">
+            <i class="fa-brands fa-github"></i> View on GitHub
+          </a>
+        </div>
+      </div>
+
+      <div class="project-box" onclick="toggleAccordion(this)">
+        <div class="project-header">
+          <div>
+            <h3>LLM Inventory Management Agent</h3>
+            <p>AI agent that interprets natural language to manage product inventory — check stock, update and track via chat.</p>
+            <span>LLM • AI Agent • Google Sheets • NLP</span>
+          </div>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="project-body">
+          <div class="project-detail-text">
+            Starts when a chat message is received. An LLM-powered AI agent interprets the user request (check stock, update product, etc.), retrieves inventory data from Google Sheets, can append or update rows in the spreadsheet, and returns results back to the user via natural language chat.
+          </div>
+          <a class="project-github" href="https://github.com/hazratali1" target="_blank">
+            <i class="fa-brands fa-github"></i> View on GitHub
+          </a>
+        </div>
+      </div>
+
+      <div class="project-box" onclick="toggleAccordion(this)">
+        <div class="project-header">
+          <div>
+            <h3>GenAI YouTube Video Creator</h3>
+            <p>Automatically generate AI-powered video scripts, content and uploads to YouTube using Google Gemini.</p>
+            <span>GenAI • Google Gemini • YouTube API • LLM</span>
+          </div>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="project-body">
+          <div class="project-detail-text">
+            Uses AI prompts to generate video ideas and scripts. Google Gemini generates short AI videos with auto-added titles and metadata. Uploads the generated video to YouTube using the YouTube API, designed mainly for short-form vertical video content.
+          </div>
+          <a class="project-github" href="https://github.com/hazratali1" target="_blank">
+            <i class="fa-brands fa-github"></i> View on GitHub
+          </a>
+        </div>
+      </div>
+
+      <div class="project-box" onclick="toggleAccordion(this)">
+        <div class="project-header">
+          <div>
+            <h3>GenAI YouTube Shorts Idea Generator</h3>
+            <p>AI-powered scheduled content ideation for YouTube Shorts using Google Gemini with structured JSON output.</p>
+            <span>GenAI • Google Gemini • AI Agent • Content</span>
+          </div>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="project-body">
+          <div class="project-detail-text">
+            Runs on a scheduled trigger using an AI agent powered by Google Gemini. Generates short educational video ideas, structures output into JSON with title, hook, and learning content, ensuring each video idea is unique and beginner-friendly.
+          </div>
+          <a class="project-github" href="https://github.com/hazratali1" target="_blank">
+            <i class="fa-brands fa-github"></i> View on GitHub
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Automation -->
+    <div class="project-category" id="cat-automation">
+
+      <div class="project-box" onclick="toggleAccordion(this)">
+        <div class="project-header">
+          <div>
+            <h3>Order Tracking Automation</h3>
+            <p>Automated workflow that tracks orders in real time and sends status notifications via email and messaging platforms.</p>
+            <span>n8n • API Integration • Automation</span>
+          </div>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="project-body">
+          <div class="project-detail-text">
+            Eliminates manual order tracking by integrating e-commerce APIs, databases and messaging services into a single automated workflow. Customers receive real-time updates on order status changes, reducing support queries and improving customer satisfaction.
+          </div>
+          <a class="project-github" href="https://github.com/hazratali1" target="_blank">
+            <i class="fa-brands fa-github"></i> View on GitHub
+          </a>
+        </div>
+      </div>
+
+      <div class="project-box" onclick="toggleAccordion(this)">
+        <div class="project-header">
+          <div>
+            <h3>Customer Support Email Automation</h3>
+            <p>AI-powered system that classifies, routes and auto-replies to customer emails using intent recognition.</p>
+            <span>LLM • n8n • Automation • Email</span>
+          </div>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="project-body">
+          <div class="project-detail-text">
+            Processes incoming support emails automatically — classifying by topic, routing to the right department and generating contextual responses using LLM reasoning. Dramatically cuts response time and frees human agents for complex queries only.
+          </div>
+          <a class="project-github" href="https://github.com/hazratali1" target="_blank">
+            <i class="fa-brands fa-github"></i> View on GitHub
+          </a>
+        </div>
+      </div>
+
+      <div class="project-box" onclick="toggleAccordion(this)">
+        <div class="project-header">
+          <div>
+            <h3>E-Commerce Inventory Management</h3>
+            <p>Smart inventory monitoring system with automated low-stock alerts, order tracking and reporting dashboards.</p>
+            <span>n8n • APIs • Database • Automation</span>
+          </div>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="project-body">
+          <div class="project-detail-text">
+            Automates the full inventory lifecycle for e-commerce businesses — monitoring stock levels, triggering reorder alerts, syncing order data across platforms, and generating daily inventory reports. Reduces stockout incidents and manual warehouse management effort.
+          </div>
+          <a class="project-github" href="https://github.com/hazratali1" target="_blank">
+            <i class="fa-brands fa-github"></i> View on GitHub
+          </a>
+        </div>
+      </div>
+
+      <div class="project-box" onclick="toggleAccordion(this)">
+        <div class="project-header">
+          <div>
+            <h3>Census Geocoder + SerpAPI MAP</h3>
+            <p>Converts addresses into geographic data and pulls census statistics using OpenStreetMap and U.S. Census APIs.</p>
+            <span>n8n • API Integration • Census API • OpenStreetMap</span>
+          </div>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="project-body">
+          <div class="project-detail-text">
+            Takes an address input, uses OpenStreetMap API to convert it into latitude and longitude, then sends coordinates to the U.S. Census Geocoder API to find census tract, county, and state. Calls the ACS Census API to fetch demographic data and processes results in a code node to calculate totals and return structured output.
+          </div>
+          <a class="project-github" href="https://github.com/hazratali1" target="_blank">
+            <i class="fa-brands fa-github"></i> View on GitHub
+          </a>
+        </div>
+      </div>
+
+      <div class="project-box" onclick="toggleAccordion(this)">
+        <div class="project-header">
+          <div>
+            <h3>Facebook Page Automation</h3>
+            <p>Connects Facebook page messaging with an AI response workflow using webhooks and automated replies.</p>
+            <span>n8n • Webhook • Facebook API • AI Agent</span>
+          </div>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="project-body">
+          <div class="project-detail-text">
+            Uses a Webhook to receive events from Facebook Messenger, validates the request using hub.mode and verify_token, and extracts the user's message text from the incoming payload. Sends the message to an AI agent to generate an automated reply, enabling 24/7 customer engagement on Facebook pages.
+          </div>
+          <a class="project-github" href="https://github.com/hazratali1" target="_blank">
+            <i class="fa-brands fa-github"></i> View on GitHub
+          </a>
+        </div>
+      </div>
+
+      <div class="project-box" onclick="toggleAccordion(this)">
+        <div class="project-header">
+          <div>
+            <h3>Multi-step Content Approval System</h3>
+            <p>Automates social media content creation and approval across LinkedIn, Instagram, Facebook, X, TikTok, and YouTube.</p>
+            <span>n8n • AI Agent • RSS • Content Automation</span>
+          </div>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="project-body">
+          <div class="project-detail-text">
+            Collects a topic and requirements from a form, pulls related news from RSS feeds and Google News, scrapes articles and extracts key information. Uses an AI agent to score article relevance and generates platform-specific posts for LinkedIn, Instagram, Facebook, X, TikTok, and YouTube Shorts.
+          </div>
+          <a class="project-github" href="https://github.com/hazratali1" target="_blank">
+            <i class="fa-brands fa-github"></i> View on GitHub
+          </a>
+        </div>
+      </div>
+
+      <div class="project-box" onclick="toggleAccordion(this)">
+        <div class="project-header">
+          <div>
+            <h3>AI Customer Support Email Agent</h3>
+            <p>Knowledge-base AI support assistant using PDF documents, vector embeddings and Pinecone for intelligent responses.</p>
+            <span>n8n • Google Gemini • Pinecone • RAG</span>
+          </div>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="project-body">
+          <div class="project-detail-text">
+            Users upload PDF documents through a form trigger. The documents are loaded and split into smaller text chunks, converted into vector embeddings using Google Gemini, and stored in Pinecone vector database. AI later searches this knowledge base to answer customer questions accurately.
+          </div>
+          <a class="project-github" href="https://github.com/hazratali1" target="_blank">
+            <i class="fa-brands fa-github"></i> View on GitHub
+          </a>
+        </div>
+      </div>
+
+      <div class="project-box" onclick="toggleAccordion(this)">
+        <div class="project-header">
+          <div>
+            <h3>Inventory Management AI Agent</h3>
+            <p>Manage product inventory using AI chat — check stock, update products and track inventory via Google Sheets.</p>
+            <span>n8n • AI Agent • Google Sheets • Automation</span>
+          </div>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="project-body">
+          <div class="project-detail-text">
+            Starts when a chat message is received. An AI agent interprets the user request (check stock, update product, etc.), retrieves inventory data from Google Sheets, can append or update rows in the spreadsheet, and returns results back to the user via chat for seamless inventory management.
+          </div>
+          <a class="project-github" href="https://github.com/hazratali1" target="_blank">
+            <i class="fa-brands fa-github"></i> View on GitHub
+          </a>
+        </div>
+      </div>
+
+      <div class="project-box" onclick="toggleAccordion(this)">
+        <div class="project-header">
+          <div>
+            <h3>Restaurant Management Assistant</h3>
+            <p>AI assistant for food orders and table bookings with multilingual support and Telegram notifications.</p>
+            <span>n8n • AI Agent • Telegram • Multilingual</span>
+          </div>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="project-body">
+          <div class="project-detail-text">
+            Triggered when a customer sends a chat message. AI detects the user's language and responds accordingly, handling food orders or table bookings. Collects user details (name, phone, items, time) and sends the confirmed order details to the restaurant owner via Telegram.
+          </div>
+          <a class="project-github" href="https://github.com/hazratali1" target="_blank">
+            <i class="fa-brands fa-github"></i> View on GitHub
+          </a>
+        </div>
+      </div>
+
+      <div class="project-box" onclick="toggleAccordion(this)">
+        <div class="project-header">
+          <div>
+            <h3>RAG in n8n — Document Knowledge System</h3>
+            <p>Build a document-based AI knowledge system using PDF uploads, embeddings and Pinecone vector search.</p>
+            <span>n8n • RAG • Google Gemini • Pinecone</span>
+          </div>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="project-body">
+          <div class="project-detail-text">
+            Users upload PDFs through a form. The system splits documents into smaller chunks, creates embeddings using Google Gemini, and stores them in Pinecone vector database. AI retrieves relevant document sections to answer questions accurately based on the uploaded knowledge base.
+          </div>
+          <a class="project-github" href="https://github.com/hazratali1" target="_blank">
+            <i class="fa-brands fa-github"></i> View on GitHub
+          </a>
+        </div>
+      </div>
+
+      <div class="project-box" onclick="toggleAccordion(this)">
+        <div class="project-header">
+          <div>
+            <h3>YouTube Video Automation</h3>
+            <p>Automatically generate and upload AI-powered videos to YouTube with titles, scripts and metadata.</p>
+            <span>n8n • Google Gemini • YouTube API • Automation</span>
+          </div>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="project-body">
+          <div class="project-detail-text">
+            Uses AI prompts to generate video ideas and scripts. Google Gemini generates short AI videos with auto-added titles and metadata. Uploads the generated video to YouTube using the YouTube API, designed mainly for short-form vertical video content.
+          </div>
+          <a class="project-github" href="https://github.com/hazratali1" target="_blank">
+            <i class="fa-brands fa-github"></i> View on GitHub
+          </a>
+        </div>
+      </div>
+
+      <div class="project-box" onclick="toggleAccordion(this)">
+        <div class="project-header">
+          <div>
+            <h3>Custom Puppeteer Login Automation</h3>
+            <p>Automatically log into websites using email links with Gmail monitoring, Apify browser automation and data scraping.</p>
+            <span>n8n • Apify • Gmail • Puppeteer</span>
+          </div>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="project-body">
+          <div class="project-detail-text">
+            Watches Gmail inbox for specific messages, extracts login links from email text, and sends the login URL to Apify automation. Apify runs a browser automation script to log into the platform and returns scraped data from the authenticated session.
+          </div>
+          <a class="project-github" href="https://github.com/hazratali1" target="_blank">
+            <i class="fa-brands fa-github"></i> View on GitHub
+          </a>
+        </div>
+      </div>
+
+      <div class="project-box" onclick="toggleAccordion(this)">
+        <div class="project-header">
+          <div>
+            <h3>YouTube Shorts Idea Generator</h3>
+            <p>Automatically generate unique, beginner-friendly YouTube Shorts content ideas on a schedule using AI.</p>
+            <span>n8n • Google Gemini • AI Agent • Scheduling</span>
+          </div>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="project-body">
+          <div class="project-detail-text">
+            Runs on a scheduled trigger using an AI agent powered by Google Gemini. Generates short educational video ideas about Adobe tools, structures output into JSON with title, hook, and learning content, ensuring each video idea is unique and beginner-friendly.
+          </div>
+          <a class="project-github" href="https://github.com/hazratali1" target="_blank">
+            <i class="fa-brands fa-github"></i> View on GitHub
+          </a>
+        </div>
+      </div>
+
+      <div class="project-box" onclick="toggleAccordion(this)">
+        <div class="project-header">
+          <div>
+            <h3>Typeform → Duplicate-Safe Credits System</h3>
+            <p>Manage user submissions and credit balance with duplicate detection, payment validation and Google Sheets sync.</p>
+            <span>n8n • Typeform • Google Sheets • Automation</span>
+          </div>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="project-body">
+          <div class="project-detail-text">
+            Triggered when a Typeform form is submitted. Compares the user with existing records in Google Sheets, detects duplicate users by matching name and email, updates or appends the user's credit data, validates payments and updates the user's remaining credits automatically.
+          </div>
+          <a class="project-github" href="https://github.com/hazratali1" target="_blank">
+            <i class="fa-brands fa-github"></i> View on GitHub
+          </a>
+        </div>
+      </div>
+
+      <div class="project-box" onclick="toggleAccordion(this)">
+        <div class="project-header">
+          <div>
+            <h3>Shopify Product Metadata Extractor</h3>
+            <p>Extract product data and metafields from Shopify using GraphQL API with pagination and scheduled triggers.</p>
+            <span>n8n • Shopify API • GraphQL • Automation</span>
+          </div>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="project-body">
+          <div class="project-detail-text">
+            Runs on a scheduled trigger, sends a GraphQL request to Shopify API, retrieves products and their metafields, and splits products into individual items for processing. Handles pagination until all products are collected for complete data extraction.
+          </div>
+          <a class="project-github" href="https://github.com/hazratali1" target="_blank">
+            <i class="fa-brands fa-github"></i> View on GitHub
+          </a>
+        </div>
+      </div>
+
+      <div class="project-box" onclick="toggleAccordion(this)">
+        <div class="project-header">
+          <div>
+            <h3>Shopify Data Sync Workflow</h3>
+            <p>Sync Shopify products and variants for inventory analysis with automated data cleaning and scheduling.</p>
+            <span>n8n • Shopify • Data Processing • Automation</span>
+          </div>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="project-body">
+          <div class="project-detail-text">
+            Runs on a scheduled daily/weekly trigger. Fetches products from a Shopify store, splits each product into variants, cleans descriptions and tags, and processes data for inventory or content analysis workflows.
+          </div>
+          <a class="project-github" href="https://github.com/hazratali1" target="_blank">
+            <i class="fa-brands fa-github"></i> View on GitHub
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ML / NLP -->
+    <div class="project-category" id="cat-ml">
+
+      <div class="project-box" onclick="toggleAccordion(this)">
+        <div class="project-header">
+          <div>
+            <h3>Fake News Detection System</h3>
+            <p>ML and transformer-based classifier that identifies misinformation articles with high accuracy.</p>
+            <span>ML • NLP • BERT • Transformers</span>
+          </div>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="project-body">
+          <div class="project-detail-text">
+            Tackles the growing problem of online misinformation by combining traditional ML classifiers with fine-tuned BERT models. Trained on multi-source labelled news datasets, the system achieves high precision in distinguishing real from fabricated news content and is applicable to social media monitoring.
+          </div>
+          <a class="project-github" href="https://github.com/hazratali1" target="_blank">
+            <i class="fa-brands fa-github"></i> View on GitHub
+          </a>
+        </div>
+      </div>
+
+      <div class="project-box" onclick="toggleAccordion(this)">
+        <div class="project-header">
+          <div>
+            <h3>Blood Donation Management System</h3>
+            <p>NLP-powered platform where users find blood donors using natural language queries with location extraction.</p>
+            <span>NLP • Web • Database</span>
+          </div>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="project-body">
+          <div class="project-detail-text">
+            Addresses emergency blood availability challenges by allowing users to search for donors using plain language — e.g. "O+ donor near Dhaka tonight". NLP extracts blood type, urgency and location from queries to return the most relevant donor matches from the database.
+          </div>
+          <a class="project-github" href="https://github.com/hazratali1" target="_blank">
+            <i class="fa-brands fa-github"></i> View on GitHub
+          </a>
+        </div>
+      </div>
+
+      <div class="project-box" onclick="toggleAccordion(this)">
+        <div class="project-header">
+          <div>
+            <h3>Depression Detection System</h3>
+            <p>Deep learning model predicting depression risk from Bangla social media posts with transformer-based analysis.</p>
+            <span>DL • NLP • Transformers • Bangla</span>
+          </div>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="project-body">
+          <div class="project-detail-text">
+            Developed as part of published IEEE STI 2025 research. Analyses Bangla social media text to identify linguistic markers of depression and suicidal risk at an early stage. The model uses transformer-based architectures fine-tuned on a custom labelled Bangla dataset, enabling early intervention support.
+          </div>
+          <a class="project-github" href="https://github.com/hazratali1" target="_blank">
+            <i class="fa-brands fa-github"></i> View on GitHub
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Deep Learning / CV -->
+    <div class="project-category" id="cat-dl">
+
+      <div class="project-box" onclick="toggleAccordion(this)">
+        <div class="project-header">
+          <div>
+            <h3>Crop Disease Detection System</h3>
+            <p>CNN-based image classifier that identifies crop diseases from leaf photos to help farmers take early action.</p>
+            <span>CNN • TensorFlow • Image Processing</span>
+          </div>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="project-body">
+          <div class="project-detail-text">
+            Designed to support Bangladeshi farmers with limited access to agricultural experts. Users photograph a crop leaf and the CNN model identifies the disease type and severity. Early detection enables timely treatment, reducing crop loss and improving agricultural yield.
+          </div>
+          <a class="project-github" href="https://github.com/hazratali1" target="_blank">
+            <i class="fa-brands fa-github"></i> View on GitHub
+          </a>
+        </div>
+      </div>
+
+      <div class="project-box" onclick="toggleAccordion(this)">
+        <div class="project-header">
+          <div>
+            <h3>AI Object Detection System</h3>
+            <p>Real-time object detection system processing images and live video streams using YOLO and CNN architectures.</p>
+            <span>Computer Vision • YOLO • CNN • OpenCV</span>
+          </div>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="project-body">
+          <div class="project-detail-text">
+            Implements state-of-the-art YOLO models for high-speed, accurate object detection in both static images and real-time video. Applicable to surveillance, inventory counting, and industrial quality control. Built with OpenCV for efficient video stream processing.
+          </div>
+          <a class="project-github" href="https://github.com/hazratali1" target="_blank">
+            <i class="fa-brands fa-github"></i> View on GitHub
+          </a>
+        </div>
+      </div>
+
+      <div class="project-box" onclick="toggleAccordion(this)">
+        <div class="project-header">
+          <div>
+            <h3>Suicide Risk Prediction</h3>
+            <p>Transformer-based early warning system identifying suicidal risk signals in Bangla text data.</p>
+            <span>Transformer • NLP • Deep Learning</span>
+          </div>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="project-body">
+          <div class="project-detail-text">
+            An extension of the depression detection research, this system focuses specifically on identifying high-risk suicidal ideation markers in online posts. Fine-tuned transformer models are used to classify severity levels, enabling mental health professionals and platforms to prioritise at-risk individuals for intervention.
+          </div>
+          <a class="project-github" href="https://github.com/hazratali1" target="_blank">
+            <i class="fa-brands fa-github"></i> View on GitHub
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Web Systems -->
+    <div class="project-category" id="cat-web">
+
+      <div class="project-box" onclick="toggleAccordion(this)">
+        <div class="project-header">
+          <div>
+            <h3>University Management System</h3>
+            <p>Full-featured university ERP platform with student, teacher and admin dashboards, attendance, results and registration.</p>
+            <span>HTML • CSS • JavaScript • PHP • MySQL</span>
+          </div>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="project-body">
+          <div class="project-detail-text">
+            A complete academic management platform built to streamline university operations. Features include student enrollment and course registration, attendance tracking, grade management, teacher assignment, and an admin dashboard for institutional oversight — all in one integrated system.
+          </div>
+          <a class="project-github" href="https://github.com/hazratali1/My-Projects" target="_blank">
+            <i class="fa-brands fa-github"></i> View on GitHub
+          </a>
+        </div>
+      </div>
+
+      <div class="project-box" onclick="toggleAccordion(this)">
+        <div class="project-header">
+          <div>
+            <h3>Website Customer Support Chatbot</h3>
+            <p>Automated chatbot embedded on websites to handle visitor queries, FAQs and support requests around the clock.</p>
+            <span>n8n • Chatbot • Automation • LLM</span>
+          </div>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="project-body">
+          <div class="project-detail-text">
+            A deployable chatbot solution for business websites that handles frequently asked questions, product enquiries and support tickets without human intervention. Built with n8n workflows and LLM response generation, it integrates seamlessly into any existing website and operates 24/7.
+          </div>
+          <a class="project-github" href="https://github.com/hazratali1" target="_blank">
+            <i class="fa-brands fa-github"></i> View on GitHub
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ====== PUBLICATIONS ====== -->
+    <div class="publication-box" style="margin-top:60px;">
+      <h2>Publications</h2>
+      <p style="font-size:13px;opacity:0.55;margin-bottom:8px;">Click any paper to expand details</p>
+
+      <div class="pub-item" onclick="toggleAccordion(this)">
+        <div class="pub-header">
+          <span class="pub-title">Deep Learning-Based Early Prediction of Depression & Suicidal Risk in Bangla Social Media Posts — <em>IEEE STI 2025</em></span>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="pub-body">
+          <div class="pub-body-inner">
+            Presents a transformer-based deep learning framework trained on a custom Bangla social media dataset to detect early-stage depression and suicidal ideation. Combines BERT-based fine-tuning with multi-class risk classification to assist mental health intervention systems. Accepted and presented at IEEE STI 2025.
+            <br><span class="pub-tag accepted">✓ Accepted — IEEE STI 2025</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pub-item" onclick="toggleAccordion(this)">
+        <div class="pub-header">
+          <span class="pub-title">Transformer-Based Hybrid Framework for Early Detection of Depression and Suicidal Risk — <em>Journal</em></span>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="pub-body">
+          <div class="pub-body-inner">
+            Proposes a hybrid architecture combining multiple transformer models with ensemble decision logic for improved accuracy in detecting mental health risk from text. Evaluates the system across multiple Bangla and English datasets, demonstrating significant performance improvements over baseline models.
+            <br><span class="pub-tag review">⏳ Under Review — Journal</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pub-item" onclick="toggleAccordion(this)">
+        <div class="pub-header">
+          <span class="pub-title">Retrieval-Grounded and Novelty-Aware Framework for Research Idea Generation with Large Language Models — <em>Journal</em></span>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="pub-body">
+          <div class="pub-body-inner">
+            Introduces a RAG-based system that assists researchers in generating novel research ideas by grounding LLM outputs in existing literature and enforcing a novelty constraint. The framework reduces redundancy and hallucination in AI-assisted research ideation, evaluated on academic paper repositories.
+            <br><span class="pub-tag review">⏳ Under Review — Journal</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pub-item" onclick="toggleAccordion(this)">
+        <div class="pub-header">
+          <span class="pub-title">Enhancing Reinforcement Learning Alignment via LLM-Based Interpretation of Human Natural Language Feedback — <em>IEEE QPAIN 2026</em></span>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="pub-body">
+          <div class="pub-body-inner">
+            Explores using Large Language Models as an intermediary to interpret and structure ambiguous human feedback for reinforcement learning from human feedback (RLHF) pipelines. The approach improves reward signal quality and alignment stability in fine-tuning scenarios.
+            <br><span class="pub-tag accepted">✓ Accepted — IEEE QPAIN 2026</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pub-item" onclick="toggleAccordion(this)">
+        <div class="pub-header">
+          <span class="pub-title">A Large Language Model–Driven Reinforcement Learning Framework for Intelligent Employee Performance Optimization — <em>IEEE QPAIN 2026</em></span>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="pub-body">
+          <div class="pub-body-inner">
+            Proposes an LLM-driven reinforcement learning framework that models and optimizes employee performance through intelligent feedback interpretation, adaptive goal setting, and personalized development strategies in organizational environments.
+            <br><span class="pub-tag accepted">✓ Accepted — IEEE QPAIN 2026</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
 
   </div>
 </section>
@@ -337,64 +1522,154 @@
 <section class="page" id="achievement">
   <div class="page-content">
     <h2>Achievements & Certificates</h2>
+    <p style="font-size:13.5px;opacity:0.6;margin-bottom:28px;">Click any certificate to expand details</p>
 
-    <div class="grid">
+    <div class="cert-grid">
 
-  <div class="box">
-    <strong>Experience Certificate — AI/ML Developer</strong><br>
-    <small>This is to certify that Hazrat Ali was employed with 9AM Solution as an AI/ML Developer at 9AM Solution.</small>
-  </div>
+      <div class="cert-box" onclick="toggleAccordion(this)">
+        <div class="cert-header">
+          <div>
+            <strong>Experience Certificate — AI/ML Developer</strong>
+            <span class="cert-issuer">9AM Solutions</span>
+          </div>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="cert-body">
+          <p>Officially certifies employment as an AI/ML Developer at 9AM Solutions, recognising hands-on work in building LLM-powered agents, RAG systems, and automation workflows for real business clients.</p>
+        </div>
+      </div>
 
-  <div class="box">
-    <strong>IEEE STI 2025 Certificate of Appreciation</strong><br>
-    <small>Recognition for participation and contribution in IEEE STI 2025 conference activities.</small>
-  </div>
- <div class="box">
-    <strong>Master in Python Language Certification</strong><br>
-    <small>Learned Python programming from CampusX.</small>
-  </div>
-  <div class="box">
-    <strong>Master in Machine Learning Certification</strong><br>
-    <small>Hands-on training on supervised, unsupervised learning and model evaluation from CampusX.</small>
-  </div>
+      <div class="cert-box" onclick="toggleAccordion(this)">
+        <div class="cert-header">
+          <div>
+            <strong>IEEE STI 2025 — Certificate of Appreciation</strong>
+            <span class="cert-issuer">IEEE</span>
+          </div>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="cert-body">
+          <p>Awarded in recognition of authoring and presenting an accepted research paper on deep learning-based mental health detection at the IEEE STI 2025 international conference.</p>
+        </div>
+      </div>
 
-  <div class="box">
-    <strong>Master in Deep Learning Specialization</strong><br>
-    <small>Neural networks, CNN, RNN, and deep learning architectures using TensorFlow from CamousX.</small>
-  </div>
+      <div class="cert-box" onclick="toggleAccordion(this)">
+        <div class="cert-header">
+          <div>
+            <strong>Master in Python Language Certification</strong>
+            <span class="cert-issuer">CampusX</span>
+          </div>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="cert-body">
+          <p>Comprehensive Python programming certification covering core syntax, data structures, OOP, file handling, and Python for data science applications.</p>
+        </div>
+      </div>
 
-  <div class="box">
-    <strong>Master in Natural Language Processing Certification</strong><br>
-    <small>Text processing, transformers, sentiment analysis and language models from CamousX.</small>
-  </div>
-                      
-  <div class="box">
-    <strong>AI Agent & Automation Certification</strong><br>
-    <small>Building autonomous AI agents using tools, APIs and workflow automation from Vibe Academy.</small>
-  </div>
-          
-  <div class="box">
-    <strong>LLM & RAG Systems Training</strong><br>
-    <small>Large Language Models, vector databases, embeddings and RAG pipelines from CamousX.</small>
-  </div>
+      <div class="cert-box" onclick="toggleAccordion(this)">
+        <div class="cert-header">
+          <div>
+            <strong>Master in Machine Learning Certification</strong>
+            <span class="cert-issuer">CampusX</span>
+          </div>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="cert-body">
+          <p>Hands-on training covering supervised and unsupervised learning algorithms, feature engineering, model evaluation metrics, hyperparameter tuning and real-world ML pipeline construction.</p>
+        </div>
+      </div>
 
-  <div class="box">
-    <strong>AI Agent & Automation Certification</strong><br>
-    <small>Building autonomous AI agents using tools, APIs and workflow automation from Ostad.</small>
-  </div>
+      <div class="cert-box" onclick="toggleAccordion(this)">
+        <div class="cert-header">
+          <div>
+            <strong>Master in Deep Learning Specialization</strong>
+            <span class="cert-issuer">CampusX</span>
+          </div>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="cert-body">
+          <p>In-depth specialisation in neural network architectures including ANN, CNN, RNN, LSTM and GRU, with practical implementation using TensorFlow and PyTorch on real-world datasets.</p>
+        </div>
+      </div>
 
-  <div class="box">
-    <strong>Computer Vision Bootcamp</strong><br>
-    <small>Image classification, object detection and OpenCV-based applications.</small>
-  </div>
+      <div class="cert-box" onclick="toggleAccordion(this)">
+        <div class="cert-header">
+          <div>
+            <strong>Master in NLP Certification</strong>
+            <span class="cert-issuer">CampusX</span>
+          </div>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="cert-body">
+          <p>Full NLP curriculum covering text preprocessing, tokenisation, embeddings, transformer architectures, BERT fine-tuning, sentiment analysis and production language model deployment.</p>
+        </div>
+      </div>
 
-  <div class="box">
-    <strong>Wadhani Foundation — Professional Skills Certificate</strong><br>
-    <small>Communication skills, leadership, teamwork and workplace professionalism.</small>
-  </div>
+      <div class="cert-box" onclick="toggleAccordion(this)">
+        <div class="cert-header">
+          <div>
+            <strong>LLM & RAG Systems Training</strong>
+            <span class="cert-issuer">CampusX</span>
+          </div>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="cert-body">
+          <p>Advanced training on Large Language Models, vector databases, embedding strategies, LangChain, and building production-grade Retrieval-Augmented Generation pipelines.</p>
+        </div>
+      </div>
 
-</div>
+      <div class="cert-box" onclick="toggleAccordion(this)">
+        <div class="cert-header">
+          <div>
+            <strong>AI Agent & Automation Certification</strong>
+            <span class="cert-issuer">Vibe Academy</span>
+          </div>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="cert-body">
+          <p>Practical certification in building autonomous AI agents using tool calling, task planning, multi-step reasoning and workflow automation frameworks including n8n and Make AI.</p>
+        </div>
+      </div>
 
+      <div class="cert-box" onclick="toggleAccordion(this)">
+        <div class="cert-header">
+          <div>
+            <strong>AI Agent & Automation Certification</strong>
+            <span class="cert-issuer">Ostad</span>
+          </div>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="cert-body">
+          <p>Certification in designing and deploying autonomous AI agents, integrating APIs, building automated business workflows, and implementing end-to-end AI-driven business process automation.</p>
+        </div>
+      </div>
+
+      <div class="cert-box" onclick="toggleAccordion(this)">
+        <div class="cert-header">
+          <div>
+            <strong>Computer Vision Bootcamp</strong>
+            <span class="cert-issuer">Bootcamp Program</span>
+          </div>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="cert-body">
+          <p>Intensive bootcamp covering image classification, object detection with YOLO, semantic segmentation, and OpenCV-based real-time video processing applications.</p>
+        </div>
+      </div>
+
+      <div class="cert-box" onclick="toggleAccordion(this)">
+        <div class="cert-header">
+          <div>
+            <strong>Wadhani Foundation — Professional Skills</strong>
+            <span class="cert-issuer">Wadhani Foundation</span>
+          </div>
+          <i class="fa-solid fa-chevron-down toggle-icon"></i>
+        </div>
+        <div class="cert-body">
+          <p>Professional development certification covering workplace communication, leadership, teamwork, problem-solving and professional ethics — skills for effective collaboration in tech environments.</p>
+        </div>
+      </div>
+
+    </div>
   </div>
 </section>
 
@@ -403,24 +1678,18 @@
 <section class="page" id="contact">
   <div class="page-content">
     <h2>Contact</h2>
-
     <div class="box">
-      Feel free to contact me anytime.
+      Feel free to reach out for collaboration, research opportunities, or project enquiries. I'm always open to interesting AI and ML work.
+      <br><br>
+      <span style="color:#14e0ff;">📍 Mirpur 11, Dhaka, Bangladesh</span><br>
+      <span style="color:#14e0ff;">📧 hazratali26725@gmail.com</span><br>
+      <span style="color:#14e0ff;">📞 +880-1883-860-803</span>
     </div>
-
-    <!-- =====================
-         DOWNLOAD CV BUTTON
-    ===================== -->
-    <a href="assets\cv\Hazrat_Ali_CV.pdf"
-       download
-       class="cv-download-btn">
-       <i class="fa-solid fa-download"></i>
-       Download My CV
+    <a href="assets/cv/Hazrat_Ali_CV.pdf" download class="cv-download-btn">
+      <i class="fa-solid fa-download"></i> Download My CV
     </a>
-
   </div>
 </section>
-
 
 
 <!-- ================= FOOTER ================= -->
@@ -430,20 +1699,10 @@
   <a href="tel:+8801883860803"><i class="fa-solid fa-phone"></i></a>
   <a href="https://wa.me/8801883860803" target="_blank"><i class="fa-brands fa-whatsapp"></i></a>
   <a href="https://github.com/hazratali1" target="_blank"><i class="fa-brands fa-github"></i></a>
-  <a href="https://linkedin.com" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
+  <a href="https://linkedin.com/in/hazrat-ali" target="_blank"><i class="fa-brands fa-linkedin"></i></a>
 </footer>
 
 <script src="script.js"></script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
